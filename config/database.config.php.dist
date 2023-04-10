@@ -1,0 +1,8 @@
+<?php
+
+return [
+    'host' => 'localhost',
+    'user' => 'your-database-username',
+    'password' => 'your-database-password',
+    'database' => 'otto-code-challenge'
+];
