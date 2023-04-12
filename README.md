@@ -7,7 +7,7 @@ There are a few unit tests included in this repo which will double check your co
 the criteria - You can run these yourself if you like by calling `composer test` on the command line.
 
 Once you've finished and you're confident you have completed the code challenge push your code to your clone of this repository
-and send Mark an email (`adam@ottooptics.io`) with a link to your clone - We'll check it over and get back to you with some feedback.
+and send Adam an email (`adam@ottooptics.io`) with a link to your clone - We'll check it over and get back to you with some feedback.
 
 ## Required Environment
 
