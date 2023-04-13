@@ -260,6 +260,32 @@ class ChallengeTest extends TestCase
     }
 
     /**
+     * @testdox Can retrieve a list of the business id, name, address and registration number as well as the linked director name.
+     */
+    public function testGetRecordsTest()
+    {
+        $results = $this->getInstance()->getRecords();
+
+        if(!$results)
+        {
+            $this->fail("No results received");
+        }
+
+        for($i = 0; $i < 1000; $i++)
+        {
+           $this->assertArrayHasKey('id', $results[$i]);
+           $this->assertArrayHasKey('first_name', $results[$i]);
+           $this->assertArrayHasKey('last_name', $results[$i]);
+           $this->assertArrayHasKey('name', $results[$i]);
+           $this->assertArrayHasKey('registered_address', $results[$i]);
+           $this->assertArrayHasKey('registration_number', $results[$i]);
+        }
+
+        $this->assertIsArray($results);
+        $this->assertCount(1000, $results);
+    }
+
+    /**
      * @param array $data
      * @return $this
      */

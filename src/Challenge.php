@@ -19,7 +19,9 @@ class Challenge
      */
     public function getDirectorRecords()
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->query("SELECT * FROM directors");
+
+        return $query->fetchAll();
     }
 
     /**
@@ -30,7 +32,10 @@ class Challenge
      */
     public function getSingleDirectorRecord($id)
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->prepare("SELECT * FROM directors WHERE id=:id");
+        $query->execute(['id' => $id]);
+        
+        return $query->fetch();
     }
 
     /**
@@ -40,7 +45,9 @@ class Challenge
      */
     public function getBusinessRecords()
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->query("SELECT * FROM businesses");
+
+        return $query->fetchAll();
     }
 
     /**
@@ -51,7 +58,10 @@ class Challenge
      */
     public function getSingleBusinessRecord($id)
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->prepare("SELECT * FROM businesses WHERE id=:id");
+        $query->execute(['id' => $id]);
+        
+        return $query->fetch();
     }
 
     /**
@@ -62,7 +72,10 @@ class Challenge
      */
     public function getBusinessesRegisteredInYear($year)
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->prepare("SELECT * FROM businesses WHERE YEAR(registration_date)=:year");
+        $query->execute(['year' => $year]);
+        
+        return $query->fetchAll();
     }
 
     /**
@@ -72,7 +85,9 @@ class Challenge
      */
     public function getLast100Records()
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->query("SELECT * FROM directors ORDER BY id DESC LIMIT 100");
+        
+        return $query->fetchAll();
     }
 
     /**
@@ -89,7 +104,30 @@ class Challenge
      */
     public function getBusinessNameWithDirectorFullName()
     {
-        //..
+        $query = $this->getPdoBuilder()->createPdoInstance()->prepare("SELECT b.name AS business_name, CONCAT_WS('', d.first_name, d.last_name) AS director_name 
+                                        FROM director_businesses AS db
+                                        JOIN businesses AS b ON b.id = db.business_id
+                                        JOIN directors AS d ON d.id = db.director_id");
+        $query->execute();
+        
+        return $query->fetchAll();
+    }
+
+    /**
+     * Use the PDOBuilder to retrieve a list of the business id, name, address and registration number as well as the linked
+     * director name.
+     * 
+     * @return array
+     */
+    public function getRecords()
+    {
+        $query = $this->getPdoBuilder()->createPdoInstance()->prepare("SELECT b.id, d.first_name, d.last_name, b.name, b.registered_address, b.registration_number 
+                                        FROM director_businesses AS db
+                                        JOIN businesses AS b ON b.id = db.business_id
+                                        JOIN directors AS d ON d.id = db.director_id");
+        $query->execute();
+        
+        return $query->fetchAll();
     }
 
     /**
